@@ -1,0 +1,26 @@
+---
+version: '2'
+
+services:
+  nginx:
+  redis:
+  fpm:
+  cli: 
+  db:
+    image: postgres:9.6
+    volumes:
+    - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: symfony
+      POSTGRES_DB: symfony
+      POSTGRES_PASSWORD: password 
+  web:
+    build: ./web
+    links:
+    - db
+    ports:
+    - 8080:80
+    environment:
+      WEBROOT: /var/www/web
+volumes:
+  db_data: ~
